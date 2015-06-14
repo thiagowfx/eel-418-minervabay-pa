@@ -1,13 +1,15 @@
 package com.minervabay.servlet;
 
+import com.minervabay.entity.*;
+import com.minervabay.facade.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author thiago
  */
 public class buscaServlet extends HttpServlet {
+    
+    @EJB
+    private DadoscatalogoFacade dadoscatalogoFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +38,13 @@ public class buscaServlet extends HttpServlet {
         
         JsonArrayBuilder booksArrayBuilder = Json.createArrayBuilder();
         
-        Integer patrimonios[] = {1, 2};
-        String titulos[] = {"Percy Jackson", "Harry Potter"};
-        String autorias[] = {"Rick Riordan", "JK Rowling"};
-        
-        for(int i = 0; i < patrimonios.length; ++i) {
+        // TODO: iterator
+        List<Dadoscatalogo> dados = dadoscatalogoFacade.findAll();
+        for(Dadoscatalogo dado: dados) {
             JsonObject bookObject = Json.createObjectBuilder()
-                    .add("patrimonio", patrimonios[i])
-                    .add("titulo", titulos[i])
-                    .add("autoria", autorias[i])
+                    .add("patrimonio", dado.getPatrimonio())
+                    .add("titulo", dado.getTitulo())
+                    .add("autoria", dado.getAutoria())
                     .build();
             booksArrayBuilder.add(bookObject);
         }
