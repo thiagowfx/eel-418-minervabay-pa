@@ -286,7 +286,7 @@
         <!-- footer -->
         <hr />
         <div class="footer">
-            &copy; <info:authorname /> 2015 &lt;<a style="text-decoration: none" href="mailto:<info:authoremail />"><info:authoremail /></a>&gt;
+            &copy; <info:authorname /> 2015 &lt;<a style="text-decoration: none" href="mailto:<info:authoremail />"><info:authoremail /></a>&gt; &bull; <a href="<info:authorhomepage />">homepage</a>
         </div>
     </body>
 </html>

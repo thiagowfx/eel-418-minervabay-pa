@@ -2,6 +2,12 @@ package com.minervabay.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author thiago
  */
-public class catalogacaoServlet extends HttpServlet {
+public class buscaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -24,18 +30,30 @@ public class catalogacaoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
+        JsonArrayBuilder booksArrayBuilder = Json.createArrayBuilder();
+        
+        Integer patrimonios[] = {1, 2};
+        String titulos[] = {"Percy Jackson", "Harry Potter"};
+        String autorias[] = {"Rick Riordan", "JK Rowling"};
+        
+        for(int i = 0; i < patrimonios.length; ++i) {
+            JsonObject bookObject = Json.createObjectBuilder()
+                    .add("patrimonio", patrimonios[i])
+                    .add("titulo", titulos[i])
+                    .add("autoria", autorias[i])
+                    .build();
+            booksArrayBuilder.add(bookObject);
+        }
+        
+        JsonArray booksArray = booksArrayBuilder.build();
+        JsonObject jsonObj = Json.createObjectBuilder()
+                .add("response", booksArray)
+                .build();
+        
+        response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet catalogacaoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet catalogacaoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.print(jsonObj);
         }
     }
 

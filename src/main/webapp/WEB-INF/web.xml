@@ -13,6 +13,10 @@
         <servlet-name>catalogacaoServlet</servlet-name>
         <servlet-class>com.minervabay.servlet.catalogacaoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>buscaServlet</servlet-name>
+        <servlet-class>com.minervabay.servlet.buscaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -20,6 +24,10 @@
     <servlet-mapping>
         <servlet-name>catalogacaoServlet</servlet-name>
         <url-pattern>/catalogacaoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>buscaServlet</servlet-name>
+        <url-pattern>/buscaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
