@@ -1,0 +1,99 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:700,400');
+@import url('http://fonts.googleapis.com/css?family=Roboto:700,400');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #ddd;
+}
+
+.title {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1.title {
+    color: indigo;
+}
+
+.footer {
+    color: gray;
+    font-size: small;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.status {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#idDivMaisExterna {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#idDivLogin {
+    text-align: center;
+}
+
+#idDivBusca {
+    text-align: center;
+}
+
+#idDivCatalogacao {
+    text-align: center;
+}
+
+#idSpinner {
+    float: right;
+}
+
+input[type="button"]{
+    width: 170px;
+}
+
+input[type="text"]{
+    width: 550px;
+}
+
+#idTabelaResultados {
+    background-color: white;
+    border: 1px solid gray;
+    width: 645px;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+#idComentarios {
+    background-color: white;
+    border: 1px solid gray;
+    width: 650px;
+    height: 100px;
+    overflow-y: scroll;
+}
+
+#idNovoComentario {
+    width: 648px;
+    height: 100px;
+    resize: none;
+    border: 1px solid gray;
+}
+
+#idMsgDialogo2 {
+    width: 890px;
+    text-align:center;
+}
+
+#idMsgDialogo3 {
+    width: 890px;
+    text-align: center;
+}
+
+#idInputTypeFile {
+    width: 558px;
+    background-color: white;
+}
