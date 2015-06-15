@@ -194,6 +194,24 @@ function popularBusca(json) {
     });
 }
 
+function popularCatalogacao(json) {
+    console.log("INFO: " + arguments.callee.name);
+    
+    json = {
+        titulo: 'titulo aqui',
+        autoria: 'autoria aqui',
+        veiculo: 'veiculo aqui',
+        datapublicacao: 'data',
+        palchave: 'palchave'
+    };
+    
+    $('#idtitulo3').val(json.titulo);
+    $('#idautoria3').val(json.autoria);
+    $('#idveiculo3').val(json.veiculo);
+    $('#iddatapublicacao3').val(json.datapublicacao);
+    $('#idpalchave3').val(json.palchave);
+}
+
 function doBusca() {
     console.log("INFO: " + arguments.callee.name);
     $("#idMsgDialogo2").html('');
@@ -212,9 +230,6 @@ function doBusca() {
         method: 'POST',
         data: jsonBusca,
         success: function (data, status, jqxhr) {
-            var jsonResposta = data;
-            console.log("INFO: Json do servlet da busca:");
-            console.log(jsonResposta);
             popularBusca(data);
         },
         error: function () {
@@ -234,10 +249,7 @@ function doPopulaCatalogacao(patrimonio) {
             "patrimonio": patrimonio
         },
         success: function (data, status, jqxhr) {
-            var jsonResposta = data;
-            console.log("INFO: Json do servlet da catalogação:");
-            console.log(jsonResposta);
-            // popularCatalogacao(data);
+            popularCatalogacao(data);
         },
         error: function () {
             $("#idMsgDialogo3").html('Um erro inesperado ocorreu no AJAX da catalogação.');
