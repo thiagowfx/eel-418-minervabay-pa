@@ -4,7 +4,6 @@ $(document).ready(function () {
         mostrarDiv(1);
     }
     else {
-        mostrarDiv(3);
         doPopulaCatalogacao(index);
     }
 
@@ -121,8 +120,7 @@ function clearBusca() {
 }
 clear2 = clearBusca;
 
-function clearCatalogo() {
-    $('#idpatrimonio3').val('');
+function clearAlmostAll3() {
     $('#idtitulo3').val('');
     $('#idautoria3').val('');
     $('#idveiculo3').val('');
@@ -132,6 +130,11 @@ function clearCatalogo() {
     $('#idNovoComentario').val('');
     $('#idComentarios').val('');
     $('#idMsgDialogo3').html('');
+}
+
+function clearCatalogo() {
+    $('#idpatrimonio3').val('');
+    clearAlmostAll3();
 }
 clear3 = clearCatalogo;
 
@@ -189,22 +192,13 @@ function popularBusca(json) {
     }
     
     $.each(json.response, function(index, value) {
-        link = '#?index=' + value.patrimonio;
         description = value.patrimonio + ": " + value.titulo + " - " + value.autoria; 
-        list.append('<li><a href="' + link + '">' + description + '</a></li><br />');
+        list.append('<li><a onclick="' + 'doPopulaCatalogacao(' + value.patrimonio + ')' + '" href="#">' + description + '</a></li><br />');
     });
 }
 
 function popularCatalogacao(json) {
     console.log("INFO: " + arguments.callee.name);
-    
-    json = {
-        titulo: 'titulo aqui',
-        autoria: 'autoria aqui',
-        veiculo: 'veiculo aqui',
-        datapublicacao: 'data',
-        palchave: 'palchave2'
-    };
     
     $('#idtitulo3').val(json.titulo);
     $('#idautoria3').val(json.autoria);
@@ -260,6 +254,7 @@ function updatePaginaBuscaEnableness() {
 
 function doPopulaCatalogacao(patrimonio) {
     console.log("INFO: " + arguments.callee.name);
+    mostrarDiv(3);
     $("#idMsgDialogo3").html('');
     $("#idNovoComentario").val('');
     $("#idpatrimonio3").val(patrimonio);
@@ -275,6 +270,7 @@ function doPopulaCatalogacao(patrimonio) {
             popularCatalogacao(data);
         },
         error: function () {
+            clearAlmostAll3();
             $("#idMsgDialogo3").html('Um erro inesperado ocorreu no AJAX da catalogação.');
         }
     });
