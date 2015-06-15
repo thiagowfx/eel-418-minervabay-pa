@@ -243,7 +243,7 @@
                     </tr>
                     <tr>
                         <td align="right">
-                            <button class="pure-button hvr-float-shadow pure-button-primary" type="button"><i class="fa fa-upload"></i> Subir arquivo</button>
+                            <button class="pure-button hvr-float-shadow pure-button-primary" type="button" id="idSubmitFile"><i class="fa fa-upload"></i> Submeter arquivo</button>
                         </td>
                         <td align="left" colspan="2">
                             <input type="file" id="idInputTypeFile"/>

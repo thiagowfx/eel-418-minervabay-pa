@@ -37,6 +37,7 @@ $(document).ready(function () {
     $("#idItemAnterior").click(doAnteriorCatalogacao);
     
     $("#idExcluir").click(doExcluir);
+    $("#idEditar").click(toggleEdit);
 });
 
 // Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
@@ -402,12 +403,32 @@ function doExcluir() {
 
 function catalogoExisteEnableness(b) {
     if(b) {
-        $("#idExcluir,#idSalvarAtual,#idSalvarNovo").removeClass('pure-button-disabled');
-        $("#idExcluir,#idSalvarAtual,#idSalvarNovo").prop('disabled', false);
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile").removeClass('pure-button-disabled');
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile").prop('disabled', false);
     }
     else {
-        console.log('===== here');
-        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idAbrirArquivo").addClass('pure-button-disabled');
-        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idAbrirArquivo").prop('disabled', true);
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile,#idAbrirArquivo").addClass('pure-button-disabled');
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile,#idAbrirArquivo").prop('disabled', true);
+    }
+}
+
+var editStatus = false;
+function toggleEdit() {
+    console.log("INFO: " + arguments.callee.name);
+    editStatus = !editStatus;
+    
+    if(editStatus) {
+        $("#idtitulo3").removeAttr('readonly');
+        $("#idautoria3").removeAttr('readonly');
+        $("#idveiculo3").removeAttr('readonly');
+        $("#iddatapublicacao3").removeAttr('readonly');
+        $("#idpalchave3").removeAttr('readonly');
+    }
+    else {
+        $("#idtitulo3").attr('readonly', '');
+        $("#idautoria3").attr('readonly', '');
+        $("#idveiculo3").attr('readonly', '');
+        $("#iddatapublicacao3").attr('readonly', '');
+        $("#idpalchave3").attr('readonly', '');
     }
 }
