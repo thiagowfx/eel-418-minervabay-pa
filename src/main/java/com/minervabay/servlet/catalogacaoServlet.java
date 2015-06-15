@@ -55,7 +55,6 @@ public class catalogacaoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
-        patrimonio = 2;
 
         Dadoscatalogo dado = dadoscatalogoFacade.find(patrimonio);
         
