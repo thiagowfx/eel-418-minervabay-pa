@@ -4,8 +4,13 @@ import com.minervabay.entity.Dadoscatalogo;
 import com.minervabay.facade.DadoscatalogoFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.Map.Entry;
 import javax.ejb.EJB;
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +21,22 @@ import javax.servlet.http.HttpServletResponse;
  * @author thiago
  */
 public class catalogacaoServlet extends HttpServlet {
-    
+
     @EJB
     private DadoscatalogoFacade dadoscatalogoFacade;
+
+    /**
+     * @see http://stackoverflow.com/questions/26346060/javax-json-add-new-jsonnumber-to-existing-jsonobject
+     */
+    private JsonObjectBuilder jsonObjectToBuilder(JsonObject jo) {
+        JsonObjectBuilder job = Json.createObjectBuilder();
+
+        for (Entry<String, JsonValue> entry : jo.entrySet()) {
+            job.add(entry.getKey(), entry.getValue());
+        }
+
+        return job;
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +50,16 @@ public class catalogacaoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
-        
+
         Dadoscatalogo dado = dadoscatalogoFacade.find(patrimonio);
         
-        JsonObject jsonResp = dado.toJson();
-        
+        // TODO
+        String palChave = "romance";
+
+        JsonObject jsonResp = jsonObjectToBuilder(dado.toJson())
+                .add("palchave", palChave)
+                .build();
+
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.print(jsonResp);

@@ -24,6 +24,7 @@
         <!-- stylesheets -->
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="bower_components/pure/pure-min.css" />
+        <link rel="stylesheet" href="bower_components/hover/css/hover-min.css" media="all" />
         <link rel="stylesheet" href="css/main.css" type="text/css" />
         
         <!-- scripts -->
@@ -281,12 +282,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        
-        <!-- footer -->
-        <hr />
-        <div class="footer">
-            &copy; <info:authorname /> 2015 &lt;<a style="text-decoration: none" href="mailto:<info:authoremail />"><info:authoremail /></a>&gt; &bull; <a href="<info:authorhomepage />">homepage</a>
+            <!-- footer -->
+            <hr />
+            <div class="footer">
+                &copy; <info:authorname /> 2015 &lt;<a style="text-decoration: none" href="mailto:<info:authoremail />"><info:authoremail /></a>&gt; &bull; <a href="<info:authorhomepage />">homepage</a>
+            </div>
         </div>
     </body>
 </html>
