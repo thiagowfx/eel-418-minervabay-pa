@@ -18,6 +18,8 @@ $(document).ready(function () {
     $("#idLimparCat").click(clearCatalogo);
     
     $("#idBuscar").click(doBusca);
+    $("#idPagProxima").click(doProximaBusca);
+    $("#idPagAnterior").click(doAnteriorBusca);
 });
 
 function setSpinnerRotating(status) {
@@ -113,6 +115,10 @@ function clearCatalogo() {
 clear3 = clearCatalogo;
 
 function getJsonBusca() {
+    if($("#idPaginaDestino").val() === "") {
+        $("#idPaginaDestino").val("1");
+    }
+    
     var jsonBusca = {
         idpatrimonio2: $("#idpatrimonio2").val(),
         idtitulo2: $("#idtitulo2").val(),
@@ -194,4 +200,32 @@ function doBusca() {
             $("#idMsgDialogo2").html('Um erro inesperado ocorreu no AJAX da busca.');
         }
     });
+}
+
+function doProximaBusca() {
+    var page = parseInt($("#idPaginaDestino").val());
+    
+    if(isNaN(page)) {
+        page = 2;
+    }
+    else {
+        page++;
+    }
+    
+    $("#idPaginaDestino").val(page);
+    doBusca();
+}
+
+function doAnteriorBusca() {
+    var page = parseInt($("#idPaginaDestino").val());
+    
+    if(isNaN(page)) {
+        page = 1;
+    }
+    else {
+        page = Math.max(1, page - 1);
+    }
+    
+    $("#idPaginaDestino").val(page);
+    doBusca();
 }

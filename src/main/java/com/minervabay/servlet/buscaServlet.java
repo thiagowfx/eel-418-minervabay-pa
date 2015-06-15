@@ -11,8 +11,6 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +24,15 @@ public class buscaServlet extends HttpServlet {
     
     @EJB
     private DadoscatalogoFacade dadoscatalogoFacade;
+    
+    private final int RESULTS_PER_PAGE = 2;
+    
+    private int[] calculateRange(int page) {
+        int[] ans = new int[2];
+        ans[0] = (page -1) * RESULTS_PER_PAGE;
+        ans[1] = page * RESULTS_PER_PAGE - 1;
+        return ans;
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,13 +51,14 @@ public class buscaServlet extends HttpServlet {
         
         boolean buscarPatrimonio = request.getParameter("idcheckpatrimonio").compareTo("true") == 0;
         String patrimonio = request.getParameter("idpatrimonio2");
+        int pagina = Integer.parseInt(request.getParameter("idPaginaDestino"));
         
         if(buscarPatrimonio && !patrimonio.isEmpty()) {
             Dadoscatalogo dado = dadoscatalogoFacade.find(Integer.parseInt(patrimonio));
             dados.add(dado);
         }
         else if (buscarPatrimonio) {
-            dados = dadoscatalogoFacade.findAll();
+            dados = dadoscatalogoFacade.findRange(calculateRange(pagina));
         }
         else {
             // TODO: more specific queries (and/or/etc)
