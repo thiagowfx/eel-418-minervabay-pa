@@ -1,5 +1,12 @@
 $(document).ready(function () {
-    mostrarDiv(1);
+    var index = getUrlParameter('index');
+    if (index === undefined || index === "") {
+        mostrarDiv(1);
+    }
+    else {
+        mostrarDiv(3);
+        doPopulaCatalogacao(index);
+    }
 
     /*
      * Inject listeners/callbacks
@@ -20,10 +27,24 @@ $(document).ready(function () {
     $("#idBuscar").click(doBusca);
     $("#idPagProxima").click(doProximaBusca);
     $("#idPagAnterior").click(doAnteriorBusca);
+    
+    $("#idItemProximo").click(doProximaCatalogacao);
+    $("#idItemAnterior").click(doAnteriorCatalogacao);
 });
 
+// Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1), sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+} 
+
 function setSpinnerRotating(status) {
-    spinner = $('#idSpinner i');
+    var spinner = $('#idSpinner i');
     if(status) {
         spinner.addClass('fa-spin');
     } else {
@@ -202,11 +223,61 @@ function doBusca() {
     });
 }
 
+function doPopulaCatalogacao(patrimonio) {
+    console.log("INFO: " + arguments.callee.name);
+    $("#idMsgDialogo3").html('');
+    
+    $.ajax({
+        url: window.location.pathname + 'catalogacaoServlet',
+        method: 'POST',
+        data: {
+            "patrimonio": patrimonio
+        },
+        success: function (data, status, jqxhr) {
+            var jsonResposta = data;
+            console.log("INFO: Json do servlet da catalogação:");
+            console.log(jsonResposta);
+            // popularCatalogacao(data);
+        },
+        error: function () {
+            $("#idMsgDialogo3").html('Um erro inesperado ocorreu no AJAX da catalogação.');
+        }
+    });
+}
+
+function doProximaCatalogacao() {
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    
+    if(isNaN(patrimonio)) {
+        patrimonio = 1;
+    }
+    else {
+        patrimonio++;
+    }
+    
+    $("#idpatrimonio3").val(patrimonio);
+    doPopulaCatalogacao(patrimonio);
+}
+
+function doAnteriorCatalogacao() {
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    
+    if(isNaN(patrimonio)) {
+        patrimonio = 1;
+    }
+    else {
+        patrimonio = Math.max(1, patrimonio - 1);
+    }
+    
+    $("#idpatrimonio3").val(patrimonio);
+    doPopulaCatalogacao(patrimonio);
+}
+
 function doProximaBusca() {
     var page = parseInt($("#idPaginaDestino").val());
     
     if(isNaN(page)) {
-        page = 2;
+        page = 1;
     }
     else {
         page++;
