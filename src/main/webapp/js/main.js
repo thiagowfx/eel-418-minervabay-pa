@@ -138,6 +138,7 @@ clear3 = clearCatalogo;
 function getJsonBusca() {
     if($("#idPaginaDestino").val() === "") {
         $("#idPaginaDestino").val("1");
+        updatePaginaBuscaEnableness();
     }
     
     var jsonBusca = {
@@ -202,7 +203,7 @@ function popularCatalogacao(json) {
         autoria: 'autoria aqui',
         veiculo: 'veiculo aqui',
         datapublicacao: 'data',
-        palchave: 'palchave'
+        palchave: 'palchave2'
     };
     
     $('#idtitulo3').val(json.titulo);
@@ -216,6 +217,7 @@ function doBusca() {
     console.log("INFO: " + arguments.callee.name);
     $("#idMsgDialogo2").html('');
     $("#idTabelaResultados").html('');
+    updatePaginaBuscaEnableness();
     
     jsonBusca = getJsonBusca();
     
@@ -238,9 +240,30 @@ function doBusca() {
     });
 }
 
+function updatePatrimonioEnableness() {
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    if(patrimonio === 1) {
+        $("#idItemAnterior").addClass('pure-button-disabled')
+    } else {
+        $("#idItemAnterior").removeClass('pure-button-disabled')
+    }
+}
+
+function updatePaginaBuscaEnableness() {
+    var pagina = parseInt($("#idPaginaDestino").val());
+    if(pagina === 1) {
+        $("#idPagAnterior").addClass('pure-button-disabled')
+    } else {
+        $("#idPagAnterior").removeClass('pure-button-disabled')
+    }
+}
+
 function doPopulaCatalogacao(patrimonio) {
     console.log("INFO: " + arguments.callee.name);
     $("#idMsgDialogo3").html('');
+    $("#idNovoComentario").val('');
+    $("#idpatrimonio3").val(patrimonio);
+    updatePatrimonioEnableness();
     
     $.ajax({
         url: window.location.pathname + 'catalogacaoServlet',
