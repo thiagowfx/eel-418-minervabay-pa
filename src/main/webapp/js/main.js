@@ -169,7 +169,7 @@ function popularBusca(json) {
     $.each(json.response, function(index, value) {
         link = '#?index=' + value.patrimonio;
         description = value.patrimonio + ": " + value.titulo + " - " + value.autoria; 
-        list.append('<li><a target="_blank" href="' + link + '">' + description + '</a></li><br />');
+        list.append('<li><a href="' + link + '">' + description + '</a></li><br />');
     });
 }
 
