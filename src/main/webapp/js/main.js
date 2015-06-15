@@ -378,6 +378,7 @@ function doExcluir() {
         },
         success: function () {
             console.log('INFO: Excluir succeeded.');
+            clear3();
             mostrarDiv(2);
             doBusca();
             window.alert('Exclusão do patrimonio ' + patrimonio + ' bem-sucedida!');
