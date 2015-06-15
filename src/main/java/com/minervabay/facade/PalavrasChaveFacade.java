@@ -6,6 +6,7 @@
 package com.minervabay.facade;
 
 import com.minervabay.entity.PalavrasChave;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +27,10 @@ public class PalavrasChaveFacade extends AbstractFacade<PalavrasChave> {
 
     public PalavrasChaveFacade() {
         super(PalavrasChave.class);
+    }
+    
+    public List findAllByPatrimonio(Integer patrimonio) {
+        return em.createNamedQuery("PalavrasChave.findAll").getResultList();
     }
     
 }

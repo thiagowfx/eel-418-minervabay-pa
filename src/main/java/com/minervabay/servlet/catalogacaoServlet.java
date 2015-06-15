@@ -1,10 +1,12 @@
 package com.minervabay.servlet;
 
 import com.minervabay.entity.Dadoscatalogo;
+import com.minervabay.entity.PalavrasChave;
 import com.minervabay.facade.DadoscatalogoFacade;
+import com.minervabay.facade.PalavrasChaveFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map.Entry;
 import javax.ejb.EJB;
 import javax.json.Json;
@@ -24,6 +26,9 @@ public class catalogacaoServlet extends HttpServlet {
 
     @EJB
     private DadoscatalogoFacade dadoscatalogoFacade;
+    
+    @EJB
+    private PalavrasChaveFacade pcFacade;
 
     /**
      * @see http://stackoverflow.com/questions/26346060/javax-json-add-new-jsonnumber-to-existing-jsonobject
@@ -50,11 +55,19 @@ public class catalogacaoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
+        patrimonio = 2;
 
         Dadoscatalogo dado = dadoscatalogoFacade.find(patrimonio);
         
-        // TODO
-        String palChave = "romance";
+        String palChave = new String();
+        
+        List<PalavrasChave> palsChave = pcFacade.findAllByPatrimonio(patrimonio);
+        for(int i = 0; i < palsChave.size(); ++i) {
+            palChave += palsChave.get(i).getPalchave();
+            if(i < palsChave.size() - 1) {
+                palChave += "; ";
+            }
+        }
 
         JsonObject jsonResp = jsonObjectToBuilder(dado.toJson())
                 .add("palchave", palChave)
