@@ -61,7 +61,15 @@ public class buscaServlet extends HttpServlet {
             dados = dadoscatalogoFacade.findRange(calculateRange(pagina));
         }
         else {
-            // TODO: more specific queries (and/or/etc)
+            boolean checktituloE = request.getParameter("idchecktituloE").compareTo("true") == 0;
+            boolean checkautoriaE = request.getParameter("idcheckautoriaE").compareTo("true") == 0;
+            boolean checkveiculoE = request.getParameter("idcheckveiculoE").compareTo("true") == 0;
+            boolean checkdatapublicacaoE = request.getParameter("idcheckdatapublicacaoE").compareTo("true") == 0;
+            boolean checkpalchaveE = request.getParameter("idcheckpalchaveE").compareTo("true") == 0;
+            
+            if(checktituloE) {
+                // TODO
+            }
         }
         
         // TODO: pages
