@@ -58,12 +58,7 @@ public class buscaServlet extends HttpServlet {
         
         // TODO: pages
         for(Dadoscatalogo dado: dados) {
-            JsonObject bookObject = Json.createObjectBuilder()
-                    .add("patrimonio", dado.getPatrimonio())
-                    .add("titulo", dado.getTitulo())
-                    .add("autoria", dado.getAutoria())
-                    .build();
-            booksArrayBuilder.add(bookObject);
+            booksArrayBuilder.add(dado.toJson());
         }
         
         JsonArray booksArray = booksArrayBuilder.build();

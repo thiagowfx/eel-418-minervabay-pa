@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.minervabay.entity;
 
-import com.minervabay.entity.Dadoscatalogo;
 import java.io.Serializable;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -101,5 +97,12 @@ public class Comentarios implements Serializable {
     public String toString() {
         return "com.minervabay.entity.Comentarios[ serialnocomentarios=" + serialnocomentarios + " ]";
     }
-    
+
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+                .add("serialnocomentarios", serialnocomentarios)
+                .add("comentario", comentario)
+                .add("patrimonio", patrimonio.getPatrimonio())
+                .build();
+    }
 }
