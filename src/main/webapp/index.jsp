@@ -87,7 +87,7 @@
                         </td>
                         <td align="left" colspan="2">
                             <input type="text"     id="idpatrimonio2"/>
-                            <input type="checkbox" id="idcheckpatrimonio"/>
+                            <input checked="checked" type="checkbox" id="idcheckpatrimonio"/>
                         </td>
                     </tr>
                     <tr>
@@ -269,12 +269,12 @@
                         <td align="center" colspan="3">
                             <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idAbrirArquivo"><i class="fa fa-folder-open"></i> Abrir arquivo</button>
                             <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idEditar"><i class="fa fa-pencil"></i> Editar</button>
-                            <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idSalvarNovo"><i class="fa fa-save"></i> Salvar novo</button>
+                            <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idSalvarNovo"><i class="fa fa-save"></i> Salvar novo comentário</button>
                         </td>
                     </tr>
                     <tr valign="top">
                         <td align="center" colspan="3">
-                            <button class="pure-button hvr-float-shadow" type="button" id="idSalvarAtual"><i class="fa fa-save"></i> Salvar atual</button>
+                            <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idSalvarAtual"><i class="fa fa-save"></i> Salvar patrimônio</button>
                             <button class="pure-button hvr-float-shadow" type="button" id="idLimparCat"><i class="fa fa-eraser"></i> Limpar</button>
                             <button class="pure-button hvr-float-shadow" type="button" id="idExcluir"><i class="fa fa-trash-o"></i> Excluir</button>
                         </td>

@@ -207,6 +207,16 @@ function popularCatalogacao(json) {
     $('#iddatapublicacao3').val(json.datapublicacao);
     $('#idpalchave3').val(json.palchave);
     
+    if(json.arquivo === undefined || json.arquivo === "") {
+        $("#idAbrirArquivo").addClass('pure-button-disabled');
+        $("#idAbrirArquivo").prop('disabled', true);
+    }
+    else {
+        $("#idAbrirArquivo").removeClass('pure-button-disabled');
+        $("#idAbrirArquivo").prop('disabled', false);
+    }
+    
+    
     $("#idComentarios").append("<ol>");
     var list = $("#idComentarios>ol");
     
@@ -392,11 +402,12 @@ function doExcluir() {
 
 function catalogoExisteEnableness(b) {
     if(b) {
-        $("#idExcluir,#idSalvarAtual").removeClass('pure-button-disabled');
-        $("#idExcluir,#idSalvarAtual").prop('disabled', false);
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo").removeClass('pure-button-disabled');
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo").prop('disabled', false);
     }
     else {
-        $("#idExcluir,#idSalvarAtual").addClass('pure-button-disabled');
-        $("#idExcluir,#idSalvarAtual").prop('disabled', true);
+        console.log('===== here');
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idAbrirArquivo").addClass('pure-button-disabled');
+        $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idAbrirArquivo").prop('disabled', true);
     }
 }
