@@ -314,6 +314,7 @@ function doPopulaCatalogacao(patrimonio) {
             clearAlmostAll3();
             $("#idMsgDialogo3").html('Erro! Um erro inesperado ocorreu no AJAX da catalogação.');
             catalogoExisteEnableness(false);
+            setEdit(false);
         }
     });
 }
@@ -413,9 +414,9 @@ function catalogoExisteEnableness(b) {
 }
 
 var editStatus = false;
-function toggleEdit() {
-    console.log("INFO: " + arguments.callee.name);
-    editStatus = !editStatus;
+
+function setEdit(b) {
+    editStatus = b;
     
     if(editStatus) {
         $("#idtitulo3").removeAttr('readonly');
@@ -423,6 +424,9 @@ function toggleEdit() {
         $("#idveiculo3").removeAttr('readonly');
         $("#iddatapublicacao3").removeAttr('readonly');
         $("#idpalchave3").removeAttr('readonly');
+        
+        $("#idSalvarAtual").removeClass('pure-button-disabled');
+        $("#idSalvarAtual").prop('disabled', false);
     }
     else {
         $("#idtitulo3").attr('readonly', '');
@@ -430,5 +434,14 @@ function toggleEdit() {
         $("#idveiculo3").attr('readonly', '');
         $("#iddatapublicacao3").attr('readonly', '');
         $("#idpalchave3").attr('readonly', '');
+        
+        $("#idSalvarAtual").addClass('pure-button-disabled');
+        $("#idSalvarAtual").prop('disabled', true);
     }
+}
+
+function toggleEdit() {
+    console.log("INFO: " + arguments.callee.name);
+    
+    setEdit(!editStatus);
 }
