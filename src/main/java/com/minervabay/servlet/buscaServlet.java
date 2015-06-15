@@ -79,7 +79,7 @@ public class buscaServlet extends HttpServlet {
         
         JsonArray booksArray = booksArrayBuilder.build();
         JsonObject jsonObj = Json.createObjectBuilder()
-                .add("response", booksArray)
+                .add("justanarray", booksArray)
                 .build();
         
         response.setContentType("application/json;charset=UTF-8");

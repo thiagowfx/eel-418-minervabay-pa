@@ -128,7 +128,7 @@ function clearAlmostAll3() {
     $('#idpalchave3').val('');
     $('#idInputTypeFile').val('');
     $('#idNovoComentario').val('');
-    $('#idComentarios').val('');
+    $('#idComentarios').html('');
     $('#idMsgDialogo3').html('');
 }
 
@@ -186,15 +186,15 @@ function popularBusca(json) {
     $("#idTabelaResultados").append("<ul>");
     var list = $("#idTabelaResultados>ul");
     
-    if(json.response.length === 0) {
+    if(json.justanarray.length === 0) {
         $("#idTabelaResultados").html('<p><strong>Nenhum livro correspondente à busca foi encontrado no banco de dados.</strong></p>');
-        return;
     }
-    
-    $.each(json.response, function(index, value) {
-        description = value.patrimonio + ": " + value.titulo + " - " + value.autoria; 
-        list.append('<li><a onclick="' + 'doPopulaCatalogacao(' + value.patrimonio + ')' + '" href="#">' + description + '</a></li><br />');
-    });
+    else {
+        $.each(json.justanarray, function(index, value) {
+            var description = value.patrimonio + ": " + value.titulo + " - " + value.autoria; 
+            list.append('<li><a onclick="' + 'doPopulaCatalogacao(' + value.patrimonio + ')' + '" href="#">' + description + '</a></li><br />');
+        });
+    }
 }
 
 function popularCatalogacao(json) {
@@ -205,6 +205,18 @@ function popularCatalogacao(json) {
     $('#idveiculo3').val(json.veiculo);
     $('#iddatapublicacao3').val(json.datapublicacao);
     $('#idpalchave3').val(json.palchave);
+    
+    $("#idComentarios").append("<ol>");
+    var list = $("#idComentarios>ol");
+    
+    if(json.comentarios.length === 0) {
+        $("#idComentarios").html("<p><strong>Nenhum comentário para esse livro.</strong></p>");
+    }
+    else {
+        $.each(json.comentarios, function(index, value) {
+            list.append('<li>' + value + '</li>');
+        });
+    }
 }
 
 function doBusca() {
@@ -256,6 +268,7 @@ function doPopulaCatalogacao(patrimonio) {
     console.log("INFO: " + arguments.callee.name);
     mostrarDiv(3);
     $("#idMsgDialogo3").html('');
+    $("#idComentarios").html('');
     $("#idNovoComentario").val('');
     $("#idpatrimonio3").val(patrimonio);
     updatePatrimonioEnableness();

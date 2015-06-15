@@ -29,7 +29,7 @@ public class PalavrasChaveFacade extends AbstractFacade<PalavrasChave> {
         super(PalavrasChave.class);
     }
     
-    public List findAllByPatrimonio(Integer patrimonio) {
+    public List findByPatrimonio(Integer patrimonio) {
         return em.createNamedQuery("PalavrasChave.findByPatrimonioNumber").setParameter("patrimonio", patrimonio).getResultList();
     }
     

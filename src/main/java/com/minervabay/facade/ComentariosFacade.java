@@ -6,6 +6,7 @@
 package com.minervabay.facade;
 
 import com.minervabay.entity.Comentarios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +27,10 @@ public class ComentariosFacade extends AbstractFacade<Comentarios> {
 
     public ComentariosFacade() {
         super(Comentarios.class);
+    }
+    
+    public List<Comentarios> findByPatrimonio(Integer patrimonio) {
+        return em.createNamedQuery("Comentarios.findByPatrimonioNumber").setParameter("patrimonio", patrimonio).getResultList();
     }
     
 }

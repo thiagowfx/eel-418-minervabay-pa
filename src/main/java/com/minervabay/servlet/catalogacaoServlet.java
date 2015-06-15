@@ -1,7 +1,9 @@
 package com.minervabay.servlet;
 
+import com.minervabay.entity.Comentarios;
 import com.minervabay.entity.Dadoscatalogo;
 import com.minervabay.entity.PalavrasChave;
+import com.minervabay.facade.ComentariosFacade;
 import com.minervabay.facade.DadoscatalogoFacade;
 import com.minervabay.facade.PalavrasChaveFacade;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import javax.ejb.EJB;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
@@ -29,6 +32,9 @@ public class catalogacaoServlet extends HttpServlet {
     
     @EJB
     private PalavrasChaveFacade pcFacade;
+    
+    @EJB
+    private ComentariosFacade comentariosFacade;
 
     /**
      * @see http://stackoverflow.com/questions/26346060/javax-json-add-new-jsonnumber-to-existing-jsonobject
@@ -55,21 +61,28 @@ public class catalogacaoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
-
-        Dadoscatalogo dado = dadoscatalogoFacade.find(patrimonio);
         
         String palChave = new String();
         
-        List<PalavrasChave> palsChave = pcFacade.findAllByPatrimonio(patrimonio);
+        List<PalavrasChave> palsChave = pcFacade.findByPatrimonio(patrimonio);
         for(int i = 0; i < palsChave.size(); ++i) {
             palChave += palsChave.get(i).getPalchave();
             if(i < palsChave.size() - 1) {
                 palChave += "; ";
             }
         }
+        
+        JsonArrayBuilder comentariosBuilder = Json.createArrayBuilder();
+        List<Comentarios> comentarios = comentariosFacade.findByPatrimonio(patrimonio);
+        
+        for(Comentarios comentario : comentarios) {
+            comentariosBuilder.add(comentario.getComentario());
+        }
 
+        Dadoscatalogo dado = dadoscatalogoFacade.find(patrimonio);
         JsonObject jsonResp = jsonObjectToBuilder(dado.toJson())
                 .add("palchave", palChave)
+                .add("comentarios", comentariosBuilder.build())
                 .build();
 
         response.setContentType("application/json;charset=UTF-8");
