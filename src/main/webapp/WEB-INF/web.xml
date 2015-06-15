@@ -17,6 +17,10 @@
         <servlet-name>buscaServlet</servlet-name>
         <servlet-class>com.minervabay.servlet.buscaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>excluirServlet</servlet-name>
+        <servlet-class>com.minervabay.servlet.excluirServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -28,6 +32,10 @@
     <servlet-mapping>
         <servlet-name>buscaServlet</servlet-name>
         <url-pattern>/buscaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>excluirServlet</servlet-name>
+        <url-pattern>/excluirServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

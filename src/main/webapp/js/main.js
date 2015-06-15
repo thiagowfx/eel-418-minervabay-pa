@@ -6,6 +6,12 @@ $(document).ready(function () {
     else {
         doPopulaCatalogacao(index);
     }
+    
+    /*
+     * Enableness
+     */
+    updatePatrimonioEnableness();
+    updatePaginaBuscaEnableness();
 
     /*
      * Inject listeners/callbacks
@@ -29,6 +35,8 @@ $(document).ready(function () {
     
     $("#idItemProximo").click(doProximaCatalogacao);
     $("#idItemAnterior").click(doAnteriorCatalogacao);
+    
+    $("#idExcluir").click(doExcluir);
 });
 
 // Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
@@ -71,32 +79,25 @@ function mostrarDiv(i) {
 }
 showDiv = mostrarDiv;
 
-//function doLogin() {
-//    $.ajax({
-//        url: window.location.pathname + 'loginServlet',
-//        method: 'POST',
-//        data: {
-//            user: $('#idUsuario').val(),
-//            password: $('#idSenha').val()
-//        },
-//        success: function () {
-//            console.log('INFO: Login succeeded.');
-//            $('#idRespAutorizacao').html('');
-//            clearLogin();
-//            mostrarDiv(2);
-//        },
-//        error: function () {
-//            console.log('INFO: Login failed.');
-//            $('#idRespAutorizacao').html('Nome de usuário ou senha incorretos.');
-//        }
-//    });
-//}
-
 function doLogin() {
-    console.log('INFO: Login succeeded.');
-    $('#idRespAutorizacao').html('');
-    clearLogin();
-    mostrarDiv(2);
+    $.ajax({
+        url: window.location.pathname + 'loginServlet',
+        method: 'POST',
+        data: {
+            user: $('#idUsuario').val(),
+            password: $('#idSenha').val()
+        },
+        success: function () {
+            console.log('INFO: Login succeeded.');
+            $('#idRespAutorizacao').html('');
+            clearLogin();
+            mostrarDiv(2);
+        },
+        error: function () {
+            console.log('INFO: Login failed.');
+            $('#idRespAutorizacao').html('Nome de usuário ou senha incorretos.');
+        }
+    });
 }
 
 function clearLogin() {
@@ -248,10 +249,19 @@ function doBusca() {
 
 function updatePatrimonioEnableness() {
     var patrimonio = parseInt($("#idpatrimonio3").val());
-    if(patrimonio === 1) {
-        $("#idItemAnterior").addClass('pure-button-disabled')
-    } else {
-        $("#idItemAnterior").removeClass('pure-button-disabled')
+    
+    if(isNaN(patrimonio)) {
+        $("#idExcluir").addClass('pure-button-disabled');
+        return;
+    }
+    else {
+        $("#idExcluir").removeClass('pure-button-disabled');
+        
+        if(patrimonio === 1) {
+            $("#idItemAnterior").addClass('pure-button-disabled')
+        } else {
+            $("#idItemAnterior").removeClass('pure-button-disabled')
+        }
     }
 }
 
@@ -343,4 +353,28 @@ function doAnteriorBusca() {
     
     $("#idPaginaDestino").val(page);
     doBusca();
+}
+
+function doExcluir() {
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    
+    if(isNaN(patrimonio)) {
+         $("#idMsgDialogo3").html('Erro! Por favor especifique qual patrimônio você quer excluir.');
+    }
+
+    $.ajax({
+        url: window.location.pathname + 'excluirServlet',
+        method: 'POST',
+        data: {
+            patrimonio: patrimonio
+        },
+        success: function () {
+            console.log('INFO: Excluir succeeded.');
+            alert('Exclusão do patrimonio ' + patrimonio ' bem-sucedida!')
+        },
+        error: function () {
+            console.log('INFO: Excluir failed.');
+            $("#idMsgDialogo3").html('Erro! Tentativa de exclusão de patrimônio não existente.');
+        }
+    });   
 }
