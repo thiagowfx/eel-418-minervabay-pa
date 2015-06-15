@@ -4,12 +4,15 @@ import com.minervabay.entity.*;
 import com.minervabay.facade.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +39,24 @@ public class buscaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        List<Dadoscatalogo> dados = new ArrayList<>();
         JsonArrayBuilder booksArrayBuilder = Json.createArrayBuilder();
         
-        // TODO: iterator
-        List<Dadoscatalogo> dados = dadoscatalogoFacade.findAll();
+        boolean buscarPatrimonio = request.getParameter("idcheckpatrimonio").compareTo("true") == 0;
+        String patrimonio = request.getParameter("idpatrimonio2");
+        
+        if(buscarPatrimonio && !patrimonio.isEmpty()) {
+            Dadoscatalogo dado = dadoscatalogoFacade.find(Integer.parseInt(patrimonio));
+            dados.add(dado);
+        }
+        else if (buscarPatrimonio) {
+            dados = dadoscatalogoFacade.findAll();
+        }
+        else {
+            // TODO: more specific queries (and/or/etc)
+        }
+        
+        // TODO: pages
         for(Dadoscatalogo dado: dados) {
             JsonObject bookObject = Json.createObjectBuilder()
                     .add("patrimonio", dado.getPatrimonio())

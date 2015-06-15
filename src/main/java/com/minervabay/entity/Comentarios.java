@@ -99,7 +99,7 @@ public class Comentarios implements Serializable {
 
     @Override
     public String toString() {
-        return "com.minervabay.servlet.Comentarios[ serialnocomentarios=" + serialnocomentarios + " ]";
+        return "com.minervabay.entity.Comentarios[ serialnocomentarios=" + serialnocomentarios + " ]";
     }
     
 }

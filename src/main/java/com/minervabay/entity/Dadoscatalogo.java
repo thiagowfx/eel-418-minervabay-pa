@@ -161,7 +161,7 @@ public class Dadoscatalogo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.minervabay.servlet.Dadoscatalogo[ patrimonio=" + patrimonio + " ]";
+        return "com.minervabay.entity.Dadoscatalogo[ patrimonio=" + patrimonio + " ]";
     }
     
 }

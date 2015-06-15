@@ -99,7 +99,7 @@ public class PalavrasChave implements Serializable {
 
     @Override
     public String toString() {
-        return "com.minervabay.servlet.PalavrasChave[ serialno=" + serialno + " ]";
+        return "com.minervabay.entity.PalavrasChave[ serialno=" + serialno + " ]";
     }
     
 }

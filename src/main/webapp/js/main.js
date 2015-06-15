@@ -114,24 +114,24 @@ clear3 = clearCatalogo;
 
 function getJsonBusca() {
     var jsonBusca = {
-        patrimonio: $("#idpatrimonio2").val(),
-        titulo: $("#idtitulo2").val(),
-        autoria: $("#idautoria2").val(),
-        veiculo: $("#idveiculo2").val(),
-        datapublicacao: $("#iddatapublicacao2").val(),
-        palchave: $("#idpalchave2").val(),
-        paginadestino: $("#idPaginaDestino").val(),
-        checkpatrimonio: $("#idcheckpatrimonio").prop('checked'),
-        checktituloOU: $("#idchecktituloOU").prop('checked'),
-        checktituloE:  $("#idchecktituloE").prop('checked'),
-        checkautoriaOU: $("#idcheckautoriaOU").prop('checked'),
-        checkautoriaE:  $("#idcheckautoriaE").prop('checked'),
-        checkveiculoOU: $("#idcheckveiculoOU").prop('checked'),
-        checkveiculoE:  $("#idcheckveiculoE").prop('checked'),
-        checkdatapublicacaoOU: $("#idcheckdatapublicacaoOU").prop('checked'),
-        checkdatapublicacaoE:  $("#idcheckdatapublicacaoE").prop('checked'),
-        checkpalchaveOU: $("#idcheckpalchaveOU").prop('checked'),
-        checkpalchaveE:  $("#idcheckpalchaveE").prop('checked')
+        idpatrimonio2: $("#idpatrimonio2").val(),
+        idtitulo2: $("#idtitulo2").val(),
+        idautoria2: $("#idautoria2").val(),
+        idveiculo2: $("#idveiculo2").val(),
+        iddatapublicacao2: $("#iddatapublicacao2").val(),
+        idpalchave2: $("#idpalchave2").val(),
+        idPaginaDestino: $("#idPaginaDestino").val(),
+        idcheckpatrimonio: $("#idcheckpatrimonio").prop('checked'),
+        idchecktituloOU: $("#idchecktituloOU").prop('checked'),
+        idchecktituloE:  $("#idchecktituloE").prop('checked'),
+        idcheckautoriaOU: $("#idcheckautoriaOU").prop('checked'),
+        idcheckautoriaE:  $("#idcheckautoriaE").prop('checked'),
+        idcheckveiculoOU: $("#idcheckveiculoOU").prop('checked'),
+        idcheckveiculoE:  $("#idcheckveiculoE").prop('checked'),
+        idcheckdatapublicacaoOU: $("#idcheckdatapublicacaoOU").prop('checked'),
+        idcheckdatapublicacaoE:  $("#idcheckdatapublicacaoE").prop('checked'),
+        idcheckpalchaveOU: $("#idcheckpalchaveOU").prop('checked'),
+        idcheckpalchaveE:  $("#idcheckpalchaveE").prop('checked')
     };
     console.log("INFO: json busca:");
     console.log(jsonBusca);
