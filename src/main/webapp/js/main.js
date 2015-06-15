@@ -242,7 +242,7 @@ function doBusca() {
             popularBusca(data);
         },
         error: function () {
-            $("#idMsgDialogo2").html('Um erro inesperado ocorreu no AJAX da busca.');
+            $("#idMsgDialogo2").html('Erro! Um erro inesperado ocorreu no AJAX da busca.');
         }
     });
 }
@@ -252,15 +252,19 @@ function updatePatrimonioEnableness() {
     
     if(isNaN(patrimonio)) {
         $("#idExcluir").addClass('pure-button-disabled');
+        $("#idExcluir").prop('disabled', true);
         return;
     }
     else {
         $("#idExcluir").removeClass('pure-button-disabled');
+        $("#idExcluir").prop('disabled', false);
         
         if(patrimonio === 1) {
-            $("#idItemAnterior").addClass('pure-button-disabled')
+            $("#idItemAnterior").addClass('pure-button-disabled');
+            $("#idItemAnterior").prop('disabled', true);
         } else {
-            $("#idItemAnterior").removeClass('pure-button-disabled')
+            $("#idItemAnterior").removeClass('pure-button-disabled');
+            $("#idItemAnterior").prop('disabled', false);
         }
     }
 }
@@ -269,8 +273,10 @@ function updatePaginaBuscaEnableness() {
     var pagina = parseInt($("#idPaginaDestino").val());
     if(pagina === 1) {
         $("#idPagAnterior").addClass('pure-button-disabled')
+        $("#idPagAnterior").prop('disabled', true);
     } else {
         $("#idPagAnterior").removeClass('pure-button-disabled')
+        $("#idPagAnterior").prop('disabled', false);
     }
 }
 
@@ -291,10 +297,12 @@ function doPopulaCatalogacao(patrimonio) {
         },
         success: function (data, status, jqxhr) {
             popularCatalogacao(data);
+            catalogoExisteEnableness(true);
         },
         error: function () {
             clearAlmostAll3();
-            $("#idMsgDialogo3").html('Um erro inesperado ocorreu no AJAX da catalogação.');
+            $("#idMsgDialogo3").html('Erro! Um erro inesperado ocorreu no AJAX da catalogação.');
+            catalogoExisteEnableness(false);
         }
     });
 }
@@ -370,11 +378,24 @@ function doExcluir() {
         },
         success: function () {
             console.log('INFO: Excluir succeeded.');
-            alert('Exclusão do patrimonio ' + patrimonio ' bem-sucedida!')
+            mostrarDiv(2);
+            doBusca();
+            window.alert('Exclusão do patrimonio ' + patrimonio + ' bem-sucedida!');
         },
         error: function () {
             console.log('INFO: Excluir failed.');
             $("#idMsgDialogo3").html('Erro! Tentativa de exclusão de patrimônio não existente.');
         }
     });   
+}
+
+function catalogoExisteEnableness(b) {
+    if(b) {
+        $("#idExcluir,#idSalvarAtual").removeClass('pure-button-disabled');
+        $("#idExcluir,#idSalvarAtual").prop('disabled', false);
+    }
+    else {
+        $("#idExcluir,#idSalvarAtual").addClass('pure-button-disabled');
+        $("#idExcluir,#idSalvarAtual").prop('disabled', true);
+    }
 }
