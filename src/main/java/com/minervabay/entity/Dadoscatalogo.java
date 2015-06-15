@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,9 +59,9 @@ public class Dadoscatalogo implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "arquivo")
     private String arquivo;
-    @OneToMany(mappedBy = "patrimonio")
+    @OneToMany(mappedBy = "patrimonio", cascade = CascadeType.REMOVE)
     private Collection<PalavrasChave> palavrasChaveCollection;
-    @OneToMany(mappedBy = "patrimonio")
+    @OneToMany(mappedBy = "patrimonio", cascade = CascadeType.REMOVE)
     private Collection<Comentarios> comentariosCollection;
 
     public Dadoscatalogo() {
