@@ -51,10 +51,10 @@
                             <br />
                         </div>
                         <p class="status" id="idRespAutorizacao"></p>
-                        <button id="idEntrar" class="pure-button pure-button-primary" type="button">
+                        <button id="idEntrar" class="pure-button hvr-float-shadow pure-button-primary" type="button">
                             <i class="fa fa-sign-in"></i> Entrar
                         </button>
-                        <button class="pure-button" type="reset">
+                        <button class="pure-button hvr-float-shadow" type="reset">
                             <i class="fa fa-eraser"></i> Limpar
                         </button>
                     </fieldset>
@@ -66,13 +66,13 @@
                     <thead>
                     <tr> 
                         <td width="160" align="left" style="font-weight: bold">
-                            <a href="#" onclick="mostrarDiv(3)" class="pure-button pure-button-primary"><i class="fa fa-book"></i> Catalogação</a>
+                            <a href="#" onclick="mostrarDiv(3)" class="pure-button hvr-float-shadow pure-button-primary"><i class="fa fa-book"></i> Catalogação</a>
                         </td>
                         <td width="500" align="center" style="font-weight: bold" class="title">
                             <h3>BUSCA</h3>
                         </td>
                         <td width="145" align="right" style="font-weight: bold">
-                            <a href="#" onclick="mostrarDiv(1)" class="pure-button"><i class="fa fa-sign-out"></i> Sair</a>
+                            <a href="#" onclick="mostrarDiv(1)" class="pure-button hvr-float-shadow"><i class="fa fa-sign-out"></i> Sair</a>
                         </td>
                     </tr>
                     </thead>
@@ -157,15 +157,15 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="3">
-                            <button class="pure-button" type="button" id="idPagAnterior"><i class="fa fa-arrow-left"></i> Anterior</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idPagAnterior"><i class="fa fa-arrow-left"></i> Anterior</button>
                             <input type="text" id="idPaginaDestino" style="width: 70px; text-align:center;">
-                            <button class="pure-button" type="button" id="idPagProxima"><i class="fa fa-arrow-right"></i> Próxima</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idPagProxima"><i class="fa fa-arrow-right"></i> Próxima</button>
                         </td>
                     </tr>
                     <tr valign="top">
                         <td align="center" colspan="3">
-                            <button class="pure-button pure-button-primary" type="button" id="idBuscar"><i class="fa fa-search"></i> Buscar</button>
-                            <button class="pure-button" type="button" id="idLimparBusca"><i class="fa fa-eraser"></i> Limpar</button>
+                            <button class="pure-button hvr-float-shadow pure-button-primary" type="button" id="idBuscar"><i class="fa fa-search"></i> Buscar</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idLimparBusca"><i class="fa fa-eraser"></i> Limpar</button>
                         </td>
                     </tr>
                     </tbody>
@@ -177,13 +177,13 @@
                     <thead>
                     <tr>
                         <td width="240" align="left" style="font-weight: bold">
-                            <a href="#" onclick="mostrarDiv(2)" class="pure-button pure-button-primary"><i class="fa fa-search"></i> Busca</a>
+                            <a href="#" onclick="mostrarDiv(2)" class="pure-button hvr-float-shadow pure-button-primary"><i class="fa fa-search"></i> Busca</a>
                         </td>
                         <td width="540" align="center" class="title">
                             <h3>CATALOGAÇÃO</h3>
                         </td>
                         <td width="160" align="right" style="color:red;font-weight:bold;">
-                            <a href="#" onclick="mostrarDiv(1)" class="pure-button"><i class="fa fa-sign-out"></i> Sair</a>
+                            <a href="#" onclick="mostrarDiv(1)" class="pure-button hvr-float-shadow"><i class="fa fa-sign-out"></i> Sair</a>
                         </td>
                     </tr>
                     </thead>
@@ -194,11 +194,11 @@
                     </tr>
                     <tr>
                         <td style="width: 275px" align="right">
-                            <button class="pure-button" type="button" id="idItemAnterior"><i class="fa fa-arrow-left"></i> Anterior</button>&nbsp;&nbsp;#Patrimônio
+                            <button class="pure-button hvr-float-shadow" type="button" id="idItemAnterior"><i class="fa fa-arrow-left"></i> Anterior</button>&nbsp;&nbsp;#Patrimônio
                         </td>
                         <td align="left" colspan="2">
                             <input type="text" id="idpatrimonio3" readonly/>&nbsp;
-                            <button class="pure-button" type="button" id="idItemProximo"><i class="fa fa-arrow-right"></i> Próximo</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idItemProximo"><i class="fa fa-arrow-right"></i> Próximo</button>
                         </td>
                     </tr>
                     <tr>
@@ -243,7 +243,7 @@
                     </tr>
                     <tr>
                         <td align="right">
-                            <button class="pure-button pure-button-primary" type="button"><i class="fa fa-upload"></i> Subir arquivo</button>
+                            <button class="pure-button hvr-float-shadow pure-button-primary" type="button"><i class="fa fa-upload"></i> Subir arquivo</button>
                         </td>
                         <td align="left" colspan="2">
                             <input type="file" id="idInputTypeFile"/>
@@ -267,16 +267,16 @@
                     </tr>
                     <tr valign="top">
                         <td align="center" colspan="3">
-                            <button class="pure-button" type="button" id="idEditar"><i class="fa fa-pencil"></i> Editar</button>
-                            <button class="pure-button" type="button"><i class="fa fa-save"></i> Salvar novo</button>
-                            <button class="pure-button" type="button"><i class="fa fa-save"></i> Salvar atual</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idEditar"><i class="fa fa-pencil"></i> Editar</button>
+                            <button class="pure-button hvr-float-shadow" type="button"><i class="fa fa-save"></i> Salvar novo</button>
+                            <button class="pure-button hvr-float-shadow" type="button"><i class="fa fa-save"></i> Salvar atual</button>
                         </td>
                     </tr>
                     <tr valign="top">
                         <td align="center" colspan="3">
-                            <button class="pure-button" type="button" id="idAbrirArquivo"><i class="fa fa-folder-open"></i> Abrir arquivo</button>
-                            <button class="pure-button" type="button" id="idLimparCat"><i class="fa fa-eraser"></i> Limpar</button>
-                            <button class="pure-button" type="button" id="idExcluir"><i class="fa fa-trash-o"></i> Excluir</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idAbrirArquivo"><i class="fa fa-folder-open"></i> Abrir arquivo</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idLimparCat"><i class="fa fa-eraser"></i> Limpar</button>
+                            <button class="pure-button hvr-float-shadow" type="button" id="idExcluir"><i class="fa fa-trash-o"></i> Excluir</button>
                         </td>
                     </tr>
                     </tbody>
