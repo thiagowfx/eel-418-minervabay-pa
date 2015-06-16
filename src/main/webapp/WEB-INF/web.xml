@@ -21,6 +21,10 @@
         <servlet-name>excluirServlet</servlet-name>
         <servlet-class>com.minervabay.servlet.excluirServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adicionarServlet</servlet-name>
+        <servlet-class>com.minervabay.servlet.adicionarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -36,6 +40,10 @@
     <servlet-mapping>
         <servlet-name>excluirServlet</servlet-name>
         <url-pattern>/excluirServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adicionarServlet</servlet-name>
+        <url-pattern>/adicionarServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

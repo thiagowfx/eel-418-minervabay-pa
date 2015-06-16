@@ -40,9 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Dadoscatalogo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Basic(optional = false)
-    @Column(name = "patrimonio")
+    @Column(name = "patrimonio", updatable = false)
     private Integer patrimonio;
     @Size(max = 2147483647)
     @Column(name = "titulo")
@@ -168,8 +168,8 @@ public class Dadoscatalogo implements Serializable {
                 .add("titulo", titulo)
                 .add("autoria", autoria)
                 .add("veiculo", veiculo)
-                .add("datapublicacao", dataPublicacao.toString())
-                .add("arquivo", arquivo)
+                .add("datapublicacao",(dataPublicacao == null ? "" : dataPublicacao.toString()))
+                .add("arquivo", arquivo == null ? "" : arquivo)
                 .build();
     }
     

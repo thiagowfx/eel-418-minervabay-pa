@@ -37,12 +37,10 @@ public class excluirServlet extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
             if(dado != null) {
-                System.out.println("===========removendo patrimonio");
                 dadosFacade.remove(dado);
                 response.setStatus(HttpServletResponse.SC_OK);
             }
             else {
-                System.out.println("===========nao encontrei esse patrimonio, logo nao posso removê-lo");
                 response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
             }
         }

@@ -13,17 +13,6 @@ $(document).ready(function () {
     updatePatrimonioEnableness();
     updatePaginaBuscaEnableness();
 
-    /*
-     * Inject listeners/callbacks
-     */
-    $(document)
-            .ajaxSend(function () {
-            setSpinnerRotating(true);
-        })
-            .ajaxStop(function () {
-            setSpinnerRotating(false);
-        });
-
     $("#idEntrar").click(doLogin);
 
     $("#idLimparBusca").click(clearBusca);
@@ -38,6 +27,7 @@ $(document).ready(function () {
     
     $("#idExcluir").click(doExcluir);
     $("#idEditar").click(toggleEdit);
+    $("#idSalvarAtual").click(prepareAddOrUpdate);
 });
 
 // Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
@@ -45,20 +35,11 @@ function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1), sURLVariables = sPageURL.split('&');
     for (var i = 0; i < sURLVariables.length; i++) {
         var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
+        if (sParameterName[0] === sParam) {
             return sParameterName[1];
         }
     }
 } 
-
-function setSpinnerRotating(status) {
-    var spinner = $('#idSpinner i');
-    if(status) {
-        spinner.addClass('fa-spin');
-    } else {
-        spinner.removeClass('fa-spin');
-    }
-}
 
 function mostrarDiv(i) {
     if (i === 1) {
@@ -283,10 +264,10 @@ function updatePatrimonioEnableness() {
 function updatePaginaBuscaEnableness() {
     var pagina = parseInt($("#idPaginaDestino").val());
     if(pagina === 1) {
-        $("#idPagAnterior").addClass('pure-button-disabled')
+        $("#idPagAnterior").addClass('pure-button-disabled');
         $("#idPagAnterior").prop('disabled', true);
     } else {
-        $("#idPagAnterior").removeClass('pure-button-disabled')
+        $("#idPagAnterior").removeClass('pure-button-disabled');
         $("#idPagAnterior").prop('disabled', false);
     }
 }
@@ -312,9 +293,9 @@ function doPopulaCatalogacao(patrimonio) {
         },
         error: function () {
             clearAlmostAll3();
-            $("#idMsgDialogo3").html('Erro! Um erro inesperado ocorreu no AJAX da catalogação.');
-            catalogoExisteEnableness(false);
             setEdit(false);
+            catalogoExisteEnableness(false);
+            $("#idMsgDialogo3").html('Erro! Um erro inesperado ocorreu no AJAX da catalogação.');
         }
     });
 }
@@ -417,6 +398,7 @@ var editStatus = false;
 
 function setEdit(b) {
     editStatus = b;
+    $("#idMsgDialogo3").html('');
     
     if(editStatus) {
         $("#idtitulo3").removeAttr('readonly');
@@ -444,4 +426,48 @@ function toggleEdit() {
     console.log("INFO: " + arguments.callee.name);
     
     setEdit(!editStatus);
+}
+
+// TODO: success or failure: ==> post-actions
+function prepareAddOrUpdate() {
+    console.log("INFO: " + arguments.callee.name);
+    
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    if(isNaN(patrimonio)) {
+        $("#idpatrimonio3").val('1');
+        patrimonio = 1;
+    }
+    
+    var datapublicacao = $("#iddatapublicacao3").val();
+    var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    
+    if(datapublicacao !== "") {
+        if(!datapublicacao.match(dateRegex)) {
+            $("#idMsgDialogo3").html('Erro! Data com formato inválido! Utilize YYYY-MM-DD.');
+            return;
+        }
+    }
+    
+    $.ajax({
+        url: window.location.pathname + 'adicionarServlet',
+        method: 'POST',
+        data: {
+            // TODO: mais campos
+            patrimonio: patrimonio,
+            titulo: $("#idtitulo3").val(),
+            autoria: $("#idautoria3").val(),
+            veiculo: $("#idveiculo3").val(),
+            datapublicacao: datapublicacao
+        },
+        success: function () {
+            console.log('INFO: Adicionar succeeded.');
+            $("#idMsgDialogo3").html('');
+            catalogoExisteEnableness(true);
+            window.alert('Informações salvas com sucesso no banco de dados!');
+        },
+        error: function () {
+            console.log('INFO: Adicionar failed.');
+            $("#idMsgDialogo3").html('Erro! Tentativa de adicionar ou atualizar um registro falhou.');
+        }
+    });  
 }
