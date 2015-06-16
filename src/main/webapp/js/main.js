@@ -387,10 +387,12 @@ function catalogoExisteEnableness(b) {
     if(b) {
         $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile").removeClass('pure-button-disabled');
         $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile").prop('disabled', false);
+        $("#idNovoComentario").removeAttr('readonly');
     }
     else {
         $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile,#idAbrirArquivo").addClass('pure-button-disabled');
         $("#idExcluir,#idSalvarAtual,#idSalvarNovo,#idSubmitFile,#idAbrirArquivo").prop('disabled', true);
+        $("#idNovoComentario").attr('readonly','');
     }
 }
 

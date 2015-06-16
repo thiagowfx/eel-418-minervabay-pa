@@ -268,7 +268,7 @@
                         <td align="center" colspan="3">
                             <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idAbrirArquivo"><i class="fa fa-folder-open"></i> Abrir arquivo</button>
                             <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idEditar"><i class="fa fa-pencil"></i> Editar</button>
-                            <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idSalvarNovo"><i class="fa fa-save"></i> Salvar novo comentário</button>
+                            <button class="pure-button pure-button-primary hvr-float-shadow" type="button" id="idSalvarNovo"><i class="fa fa-save"></i> Enviar novo comentário</button>
                         </td>
                     </tr>
                     <tr valign="top">
