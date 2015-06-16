@@ -1,6 +1,7 @@
 package com.minervabay.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.json.Json;
@@ -163,12 +164,13 @@ public class Dadoscatalogo implements Serializable {
     }
     
     public JsonObject toJson() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return Json.createObjectBuilder()
                 .add("patrimonio", patrimonio)
                 .add("titulo", titulo)
                 .add("autoria", autoria)
                 .add("veiculo", veiculo)
-                .add("datapublicacao",(dataPublicacao == null ? "" : dataPublicacao.toString()))
+                .add("datapublicacao", dataPublicacao == null ? "" : df.format(dataPublicacao))
                 .add("arquivo", arquivo == null ? "" : arquivo)
                 .build();
     }

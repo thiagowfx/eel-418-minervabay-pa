@@ -457,7 +457,8 @@ function prepareAddOrUpdate() {
             titulo: $("#idtitulo3").val(),
             autoria: $("#idautoria3").val(),
             veiculo: $("#idveiculo3").val(),
-            datapublicacao: datapublicacao
+            datapublicacao: datapublicacao,
+            palchave: $("#idpalchave3").val()
         },
         success: function () {
             console.log('INFO: Adicionar succeeded.');
