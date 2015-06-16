@@ -21,7 +21,7 @@ public class PalavrasChaveFacade extends AbstractFacade<PalavrasChave> {
     private EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 
@@ -31,6 +31,10 @@ public class PalavrasChaveFacade extends AbstractFacade<PalavrasChave> {
     
     public List findByPatrimonio(Integer patrimonio) {
         return em.createNamedQuery("PalavrasChave.findByPatrimonioNumber").setParameter("patrimonio", patrimonio).getResultList();
+    }
+    
+    public void removeByPatrimonio(Integer patrimonio) {
+        em.createNamedQuery("PalavrasChave.removeByPatrimonioNumber").setParameter("patrimonio", patrimonio).executeUpdate();
     }
     
 }

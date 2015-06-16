@@ -34,7 +34,6 @@
 
     <body id="idBody">
         <div id="idDivMaisExterna">
-            <p id="idSpinner"><i class="fa fa-spinner fa-2x"></i></p>
             <h1 class="title"><info:appname /></h1>
 
             <div id="idDivLogin">
@@ -286,6 +285,10 @@
             <hr />
             <div class="footer">
                 &copy; <info:authorname /> 2015 &lt;<a style="text-decoration: none" href="mailto:<info:authoremail />"><info:authoremail /></a>&gt; &bull; <a href="<info:authorhomepage />">homepage</a>
+            </div>
+            <div>
+                <span style="color: #cc3300">Patrocínio:</span><br />
+                <img alt="Leão da Floresta" style="height: 50px" src="leao.png" />
             </div>
         </div>
     </body>
