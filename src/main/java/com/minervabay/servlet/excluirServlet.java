@@ -2,6 +2,8 @@ package com.minervabay.servlet;
 
 import com.minervabay.entity.Dadoscatalogo;
 import com.minervabay.facade.DadoscatalogoFacade;
+import static com.minervabay.util.Utils.getBookPath;
+import java.io.File;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -36,6 +38,17 @@ public class excluirServlet extends HttpServlet {
 
         if (dado != null) {
             dadosFacade.remove(dado);
+
+            String arquivo = dado.getArquivo();
+            if (arquivo != null && !arquivo.isEmpty()) {
+                try {
+                    new File(getBookPath(getServletContext(), arquivo)).delete();
+                } catch (Exception e) {
+                    response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+                    return;
+                }
+            }
+
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);

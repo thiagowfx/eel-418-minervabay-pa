@@ -2,6 +2,8 @@ package com.minervabay.servlet;
 
 import com.minervabay.entity.Dadoscatalogo;
 import com.minervabay.facade.DadoscatalogoFacade;
+import static com.minervabay.util.Utils.getBookPath;
+import java.io.File;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -45,26 +47,32 @@ public class arquivoServlet extends HttpServlet {
         String arquivo = dado.getArquivo();
 
         if (arquivo != null && !arquivo.isEmpty()) {
-            System.out.println("=====TODO: trying delete");
-            // TODO: try delete
+            try {
+                new File(getBookPath(getServletContext(), arquivo)).delete();
+            }
+            catch(Exception e) {
+                response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+                return;
+            }
         }
-        
+
         String extension;
         int i = nomearquivo.lastIndexOf('.');
         if (i > 0) {
             extension = nomearquivo.substring(i); // --> e.g. ".pdf"
-        }
-        else {
+        } else {
             response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
             return;
         }
-        String nomearquivonobd = patrimonio.toString() + extension;    
+        String nomearquivonobd = patrimonio.toString() + extension;
 
         dado.setArquivo(nomearquivonobd);
         dadosFacade.edit(dado);
 
-        System.out.println("======TODO: trying file storage");
-        // TODO: try file storage
+        File file = new File(getBookPath(getServletContext(), nomearquivonobd));
+        file.createNewFile();
+
+        // TODO: write file out
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
