@@ -4,17 +4,25 @@ import com.minervabay.entity.Dadoscatalogo;
 import com.minervabay.facade.DadoscatalogoFacade;
 import static com.minervabay.util.Utils.getBookPath;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author thiago
  */
+@MultipartConfig(maxFileSize = 50 * 1024 * 1024, maxRequestSize = 50 * 1024 * 1024, fileSizeThreshold = 5 * 1024 * 1024)
 public class arquivoServlet extends HttpServlet {
 
     @EJB
@@ -34,8 +42,11 @@ public class arquivoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
+        Collection parts = request.getParts();
+
         Integer patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
         String nomearquivo = request.getParameter("nomearquivo");
+        Part arquivobinario = request.getPart("arquivobinario");
 
         Dadoscatalogo dado = dadosFacade.find(patrimonio);
 
@@ -49,8 +60,7 @@ public class arquivoServlet extends HttpServlet {
         if (arquivo != null && !arquivo.isEmpty()) {
             try {
                 new File(getBookPath(getServletContext(), arquivo)).delete();
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
                 return;
             }
@@ -70,9 +80,14 @@ public class arquivoServlet extends HttpServlet {
         dadosFacade.edit(dado);
 
         File file = new File(getBookPath(getServletContext(), nomearquivonobd));
-        file.createNewFile();
 
-        // TODO: write file out
+        try (InputStream inStream = arquivobinario.getInputStream(); OutputStream outStream = new FileOutputStream(file)) {
+            byte[] buffer = new byte[100000];
+            int bytesRead;
+            while ((bytesRead = inStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

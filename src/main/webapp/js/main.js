@@ -533,34 +533,41 @@ function doSubmeterArquivo() {
     }
     
     var nomearquivo = $("#idInputTypeFile").val();
-    
     if(nomearquivo === "") {
         $("#idMsgDialogo3").html('Erro! Arquivo não especificado.');
         return;
     }
     
-    $.ajax({
-        url: window.location.pathname + 'arquivoServlet',
-        method: 'POST',
-        data: {
-            patrimonio: patrimonio,
-            nomearquivo: nomearquivo
-        },
-        success: function () {
+    var arquivobinario = document.getElementById('idInputTypeFile').files[0];
+    
+    var formData = new FormData();
+    formData.append('patrimonio', patrimonio);
+    formData.append('nomearquivo', nomearquivo);
+    formData.append('arquivobinario', arquivobinario);
+        
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'arquivoServlet');
+        
+    xhr.onload = function () {
+        if (xhr.status === 200) {
             console.log('INFO: Submeter arquivo succeeded.');
+            
             $("#idMsgDialogo3").html('');
             $("#idInputTypeFile").val('');
-            
+                
             $("#idAbrirArquivo").removeClass('pure-button-disabled');
             $("#idAbrirArquivo").prop('disabled', false);
-            
-            window.alert('Arquivo enviado com sucesso!');
-        },
-        error: function () {
+                
+            window.alert('Your file has been uploaded to the server successfully.');
+        } 
+        else {
             console.log('INFO: Submeter arquivo failed.');
             $("#idMsgDialogo3").html('Erro! Tentativa de submeter arquivo falhou.');
+            return;
         }
-    });   
+    };
+        
+    xhr.send(formData);
 }
 
 function doAbrirArquivo() {
