@@ -29,6 +29,17 @@
         
         <!-- scripts -->
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/tinymce/tinymce.min.js"></script>
+        <script>tinymce.init({
+            selector: '#idNovoComentario',
+            setup: function(ed) {
+                ed.on('init', function() {
+                    this.execCommand("fontSize", false, "18px");
+                });
+            },
+            // forced_root_block : ''
+        });
+        </script>
         <script type="text/javascript" src="js/main.js"></script>
     </head>
 

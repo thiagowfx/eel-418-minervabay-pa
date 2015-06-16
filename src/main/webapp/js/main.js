@@ -28,6 +28,7 @@ $(document).ready(function () {
     $("#idExcluir").click(doExcluir);
     $("#idEditar").click(toggleEdit);
     $("#idSalvarAtual").click(prepareAddOrUpdate);
+    $("#idSalvarNovo").click(doNovoComentario);
 });
 
 // Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
@@ -110,7 +111,9 @@ function clearAlmostAll3() {
     $('#iddatapublicacao3').val('');
     $('#idpalchave3').val('');
     $('#idInputTypeFile').val('');
-    $('#idNovoComentario').val('');
+    if(tinymce.activeEditor !== null) {
+        tinymce.activeEditor.setContent("");
+    }
     $('#idComentarios').html('');
     $('#idMsgDialogo3').html('');
 }
@@ -180,6 +183,16 @@ function popularBusca(json) {
     }
 }
 
+function addComentario(comment) {
+    var list = $("#idComentarios>ol");
+    if (list.length === 0) {
+        $("#idComentarios").append("<ol>");
+        list = $("#idComentarios>ol");
+    }
+    
+    list.append('<li>' + comment + '</li><hr/>');
+}
+
 function popularCatalogacao(json) {
     console.log("INFO: " + arguments.callee.name);
     
@@ -198,16 +211,12 @@ function popularCatalogacao(json) {
         $("#idAbrirArquivo").prop('disabled', false);
     }
     
-    
-    $("#idComentarios").append("<ol>");
-    var list = $("#idComentarios>ol");
-    
     if(json.comentarios.length === 0) {
-        $("#idComentarios").html("<p><strong>Nenhum comentário para esse livro.</strong></p>");
+        $("#idComentarios").html("<p align='center'><strong>Nenhum comentário para esse livro.</strong></p>");
     }
     else {
         $.each(json.comentarios, function(index, value) {
-            list.append('<li>' + value + '</li>');
+            addComentario(value);
         });
     }
 }
@@ -277,7 +286,9 @@ function doPopulaCatalogacao(patrimonio) {
     mostrarDiv(3);
     $("#idMsgDialogo3").html('');
     $("#idComentarios").html('');
-    $("#idNovoComentario").val('');
+    if(tinymce.activeEditor != null) { 
+        tinymce.activeEditor.setContent("");
+    }
     $("#idpatrimonio3").val(patrimonio);
     updatePatrimonioEnableness();
     
@@ -430,7 +441,6 @@ function toggleEdit() {
     setEdit(!editStatus);
 }
 
-// TODO: success or failure: ==> post-actions
 function prepareAddOrUpdate() {
     console.log("INFO: " + arguments.callee.name);
     
@@ -454,7 +464,6 @@ function prepareAddOrUpdate() {
         url: window.location.pathname + 'adicionarServlet',
         method: 'POST',
         data: {
-            // TODO: mais campos
             patrimonio: patrimonio,
             titulo: $("#idtitulo3").val(),
             autoria: $("#idautoria3").val(),
@@ -473,4 +482,40 @@ function prepareAddOrUpdate() {
             $("#idMsgDialogo3").html('Erro! Tentativa de adicionar ou atualizar um registro falhou.');
         }
     });  
+}
+
+function doNovoComentario() {
+    console.log("INFO: " + arguments.callee.name);
+    
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    if(isNaN(patrimonio)) {
+        $("#idpatrimonio3").val('1');
+        patrimonio = 1;
+    }
+    
+    var comentarionovo = tinyMCE.activeEditor.getContent();
+    
+    if(comentarionovo === "") {
+        $("#idMsgDialogo3").html('Erro! Você quer realmente inserir um comentário vazio?');
+        return;
+    }
+    
+    $.ajax({
+        url: window.location.pathname + 'novoComentarioServlet',
+        method: 'POST',
+        data: {
+            patrimonio: patrimonio,
+            comentarionovo: comentarionovo
+        },
+        success: function () {
+            console.log('INFO: Comentário novo succeeded.');
+            $("#idMsgDialogo3").html('');
+            addComentario(comentarionovo);
+            window.alert('Novo comentário enviado com sucesso!');
+        },
+        error: function () {
+            console.log('INFO: Comentário novo failed.');
+            $("#idMsgDialogo3").html('Erro! Tentativa de adicionar um novo comentário falhou.');
+        }
+    });      
 }
