@@ -582,11 +582,19 @@ function doAbrirArquivo() {
             console.log('INFO: Abrir arquivo succeeded.');
             $("#idMsgDialogo3").html('');
             
-            var file = new Blob([data], {
-                type: 'application/pdf'
-            });
-            var fileURL = URL.createObjectURL(file);
-            window.open(fileURL);
+            var form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("action", "abrirArquivoServlet");
+            form.setAttribute("target", "novaJanela_str");
+            
+            var element = document.createElement("input");
+            element.setAttribute("type", "hidden");
+            element.setAttribute("name", "patrimonio");
+            element.setAttribute("value", patrimonio);
+            
+            document.body.appendChild(form);
+            form.appendChild(element);
+            form.submit();
         },
         error: function () {
             console.log('INFO: Abrir arquivo failed.');
