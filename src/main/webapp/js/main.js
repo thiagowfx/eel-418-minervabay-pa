@@ -31,6 +31,7 @@ $(document).ready(function () {
     $("#idSalvarNovo").click(doNovoComentario);
     
     $("#idSubmitFile").click(doSubmeterArquivo);
+    $("#idAbrirArquivo").click(doAbrirArquivo);
 });
 
 // Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
@@ -549,6 +550,10 @@ function doSubmeterArquivo() {
             console.log('INFO: Submeter arquivo succeeded.');
             $("#idMsgDialogo3").html('');
             $("#idInputTypeFile").val('');
+            
+            $("#idAbrirArquivo").removeClass('pure-button-disabled');
+            $("#idAbrirArquivo").prop('disabled', false);
+            
             window.alert('Arquivo enviado com sucesso!');
         },
         error: function () {
@@ -556,4 +561,36 @@ function doSubmeterArquivo() {
             $("#idMsgDialogo3").html('Erro! Tentativa de submeter arquivo falhou.');
         }
     });   
+}
+
+function doAbrirArquivo() {
+    console.log("INFO: " + arguments.callee.name);
+    
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    if(isNaN(patrimonio)) {
+        $("#idpatrimonio3").val('1');
+        patrimonio = 1;
+    }
+    
+    $.ajax({
+        url: window.location.pathname + 'abrirArquivoServlet',
+        method: 'POST',
+        data: {
+            patrimonio: patrimonio
+        },
+        success: function (data, status, jqxhr) {
+            console.log('INFO: Abrir arquivo succeeded.');
+            $("#idMsgDialogo3").html('');
+            
+            var file = new Blob([data], {
+                type: 'application/pdf'
+            });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+        },
+        error: function () {
+            console.log('INFO: Abrir arquivo failed.');
+            $("#idMsgDialogo3").html('Erro desconhecido ao tentar abrir o arquivo.');
+        }
+    });    
 }
