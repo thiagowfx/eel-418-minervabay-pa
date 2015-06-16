@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author thiago
  */
-public class excluirServlet extends HttpServlet {
+public class arquivoServlet extends HttpServlet {
 
     @EJB
     private DadoscatalogoFacade dadosFacade;
@@ -30,16 +30,41 @@ public class excluirServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
 
-        int patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
+        Integer patrimonio = Integer.parseInt(request.getParameter("patrimonio"));
+        String nomearquivo = request.getParameter("nomearquivo");
+
         Dadoscatalogo dado = dadosFacade.find(patrimonio);
 
-        if (dado != null) {
-            dadosFacade.remove(dado);
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        if (dado == null) {
             response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+            return;
         }
+
+        String arquivo = dado.getArquivo();
+
+        if (arquivo != null && !arquivo.isEmpty()) {
+            System.out.println("=====TODO: trying delete");
+            // TODO: try delete
+        }
+        
+        String extension;
+        int i = nomearquivo.lastIndexOf('.');
+        if (i > 0) {
+            extension = nomearquivo.substring(i); // --> e.g. ".pdf"
+        }
+        else {
+            response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+            return;
+        }
+        String nomearquivonobd = patrimonio.toString() + extension;    
+
+        dado.setArquivo(nomearquivonobd);
+        dadosFacade.edit(dado);
+
+        System.out.println("======TODO: trying file storage");
+        // TODO: try file storage
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

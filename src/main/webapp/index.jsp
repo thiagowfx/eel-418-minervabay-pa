@@ -299,7 +299,7 @@
             </div>
             <div>
                 <span style="color: #cc3300">Patrocínio:</span><br />
-                <img alt="Leão da Floresta" style="height: 50px" src="leao.png" />
+                <img alt="Leão da Floresta" style="height: 50px" src="img/leao.png" />
             </div>
         </div>
     </body>
