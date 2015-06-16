@@ -29,6 +29,8 @@ $(document).ready(function () {
     $("#idEditar").click(toggleEdit);
     $("#idSalvarAtual").click(prepareAddOrUpdate);
     $("#idSalvarNovo").click(doNovoComentario);
+    
+    $("#idSubmitFile").click(doSubmeterArquivo);
 });
 
 // Upstream: http://stackoverflow.com/questions/19491336/get-url-parameter-jquery
@@ -518,4 +520,40 @@ function doNovoComentario() {
             $("#idMsgDialogo3").html('Erro! Tentativa de adicionar um novo comentário falhou.');
         }
     });      
+}
+
+function doSubmeterArquivo() {
+    console.log("INFO: " + arguments.callee.name);
+    
+    var patrimonio = parseInt($("#idpatrimonio3").val());
+    if(isNaN(patrimonio)) {
+        $("#idpatrimonio3").val('1');
+        patrimonio = 1;
+    }
+    
+    var nomearquivo = $("#idInputTypeFile").val();
+    
+    if(nomearquivo === "") {
+        $("#idMsgDialogo3").html('Erro! Arquivo não especificado.');
+        return;
+    }
+    
+    $.ajax({
+        url: window.location.pathname + 'arquivoServlet',
+        method: 'POST',
+        data: {
+            patrimonio: patrimonio,
+            nomearquivo: nomearquivo
+        },
+        success: function () {
+            console.log('INFO: Submeter arquivo succeeded.');
+            $("#idMsgDialogo3").html('');
+            $("#idInputTypeFile").val('');
+            window.alert('Arquivo enviado com sucesso!');
+        },
+        error: function () {
+            console.log('INFO: Submeter arquivo failed.');
+            $("#idMsgDialogo3").html('Erro! Tentativa de submeter arquivo falhou.');
+        }
+    });   
 }

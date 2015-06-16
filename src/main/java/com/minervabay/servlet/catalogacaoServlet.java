@@ -83,6 +83,7 @@ public class catalogacaoServlet extends HttpServlet {
         JsonObject jsonResp = jsonObjectToBuilder(dado.toJson())
                 .add("palchave", palChave)
                 .add("comentarios", comentariosBuilder.build())
+                // TODO: add arquivos
                 .build();
 
         response.setContentType("application/json;charset=UTF-8");

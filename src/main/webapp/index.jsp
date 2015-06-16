@@ -36,8 +36,7 @@
                 ed.on('init', function() {
                     this.execCommand("fontSize", false, "18px");
                 });
-            },
-            // forced_root_block : ''
+            }
         });
         </script>
         <script type="text/javascript" src="js/main.js"></script>
@@ -256,7 +255,8 @@
                             <button class="pure-button hvr-float-shadow pure-button-primary" type="button" id="idSubmitFile"><i class="fa fa-upload"></i> Submeter arquivo</button>
                         </td>
                         <td align="left" colspan="2">
-                            <input type="file" id="idInputTypeFile"/>
+                            <input type="file" id="idInputTypeFile"/>&nbsp;
+                            <button class="pure-button" type="button" onclick="$('#idInputTypeFile').val('')"><i class="fa fa-times"></i> Limpar</button>
                         </td>
                     </tr>
                     <tr valign="top">
