@@ -3,7 +3,7 @@ var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 $(document).ready(function () {
     var index = getUrlParameter('index');
     if (index === undefined || index === "") {
-        mostrarDiv(2);
+        mostrarDiv(1);
     }
     else {
         doPopulaCatalogacao(index);
