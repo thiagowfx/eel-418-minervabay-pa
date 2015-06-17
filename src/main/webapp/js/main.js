@@ -1,3 +1,5 @@
+var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
 $(document).ready(function () {
     var index = getUrlParameter('index');
     if (index === undefined || index === "") {
@@ -161,7 +163,7 @@ function getJsonBusca() {
 function validateJsonBusca(json) {
     var ans = false;
     
-    $("input[id^='id'][id$='OU'],#idcheckpatrimonio").each(function(index) {
+    $("input[id^='id'][id$='OU'],input[id^='id'][id$='E'],#idcheckpatrimonio").each(function(index) {
         ans = ans || ($(this).prop('checked'));
     });
     
@@ -236,6 +238,14 @@ function doBusca() {
     if(!isValid) {
         $("#idMsgDialogo2").html('Erro! Por favor selecione pelo menos um critério de busca.');
         return;
+    }
+    
+    var datapublicacao = $("#iddatapublicacao2").val();
+    if(datapublicacao !== "") {
+        if(!datapublicacao.match(dateRegex)) {
+            $("#idMsgDialogo2").html('Erro! Data com formato inválido! Utilize YYYY-MM-DD.');
+            return;
+        }
     }
     
     $.ajax({
@@ -454,7 +464,6 @@ function prepareAddOrUpdate() {
     }
     
     var datapublicacao = $("#iddatapublicacao3").val();
-    var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     
     if(datapublicacao !== "") {
         if(!datapublicacao.match(dateRegex)) {

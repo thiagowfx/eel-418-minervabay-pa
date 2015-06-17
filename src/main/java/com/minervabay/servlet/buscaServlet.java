@@ -78,50 +78,41 @@ public class buscaServlet extends HttpServlet {
             String autoria = request.getParameter("idautoria2");
             String veiculo = request.getParameter("idveiculo2");
             String palchave = request.getParameter("idpalchave2");
-
             String datapublicacao_str = request.getParameter("iddatapublicacao2");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            Date datapublicacao;
-            try {
-                datapublicacao = df.parse(datapublicacao_str);
-            }
-            catch(Exception e) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                return;
-            }
             
-            boolean atlone = checktituloE || checkautoriaE || checkveiculoE || checkdatapublicacaoE || checkpalchaveE || checktituloOU || checkautoriaOU || checkveiculoOU || checkdatapublicacaoOU || checkpalchaveOU;
-            StringBuilder sb;
+            // boolean atlone = checktituloE || checkautoriaE || checkveiculoE || checkdatapublicacaoE || checkpalchaveE || checktituloOU || checkautoriaOU || checkveiculoOU || checkdatapublicacaoOU || checkpalchaveOU;
             
-            if(checktituloE) {
-                
-            }
+            String tituloE = checktituloE ? titulo : "";
+            String autoriaE = checkautoriaE ? autoria : "";
+            String veiculoE = checkveiculoE ? veiculo : "";
+            String palchaveE = checkpalchaveE ? palchave : "";
             
-            String ourwhere = ""
-                    + "d.titulo LIKE :titulo"
+            String ourwhere = " "
+                    + "d.titulo LIKE " + pct(tituloE)
                     + " AND "
-                    + "d.autoria = :autoria"
+                    + "d.autoria LIKE " + pct(autoriaE)
                     + " AND "
-                    + "d.veiculo = :veiculo"
+                    + "d.veiculo LIKE " + pct(veiculoE)
                     + " AND "
-                    + "d.palchave = :palchave"
-                    + " AND "
-                    + "d.datapublicacao = :datapublicacao"
-                    + " AND "
-                    + "("
-                    + "d.titulo = :titulo"
-                    + " OR "
-                    + "d.autoria = :autoria"
-                    + " OR "
-                    + "d.veiculo = :veiculo"
-                    + " OR "
-                    + "d.palchave = :palchave"
-                    + " OR "
-                    + "d.datapublicacao = :datapublicacao"
-                    + ")"
-                    ;
+                    + (checkdatapublicacaoE ? ("(d.dataPublicacao BETWEEN '" + datapublicacao_str + "' AND '" + datapublicacao_str + "')") : "1 = 1");
+//                    ;
+//                    + " AND "
+//                    + "("
+//                    + "d.titulo LIKE %:titulo%"
+//                    + " OR "
+//                    + "d.autoria LIKE %:autoria%"
+//                    + " OR "
+//                    + "d.veiculo LIKE :%veiculo%"
+//                    + " OR "
+//                    + "d.palchave LIKE :%palchave%"
+//                    + " OR "
+//                    + "d.datapublicacao = :datapublicacao"
+//                    + ")"
+//                    ;
             
-            Query query = dadosFacade.getEntityManager().createQuery("SELECT d FROM Dadoscatalogo d WHERE (" + ourwhere + ")");
+            String queryStr = "SELECT d FROM Dadoscatalogo d WHERE (" + ourwhere + ")";
+            System.out.println("====" + queryStr);
+            Query query = dadosFacade.getEntityManager().createQuery(queryStr);
             dados = query.getResultList();
         }
 
@@ -138,6 +129,10 @@ public class buscaServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             out.print(jsonObj);
         }
+    }
+    
+    String pct(String s) {
+        return "'%".concat(s).concat("%'");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
