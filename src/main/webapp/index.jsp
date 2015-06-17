@@ -139,7 +139,7 @@
                             <input type="checkbox" id="idcheckdatapublicacaoE"/> (E)
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none">
                         <td align="right">
                             Palavras-chave
                         </td>

@@ -92,8 +92,8 @@ public class buscaServlet extends HttpServlet {
             
             String queryStr
                     = "SELECT d FROM Dadoscatalogo d "
-                    + "LEFT JOIN PalavrasChave p "
-                    + "ON Dadoscatalogo.patrimonio = PalavrasChave.patrimonio "
+//                    + "LEFT JOIN PalavrasChave p "
+//                    + "ON Dadoscatalogo.patrimonio = PalavrasChave.patrimonio "
                     + "WHERE ("
                     + "d.titulo LIKE " + pct(tituloE)
                     + " AND "
