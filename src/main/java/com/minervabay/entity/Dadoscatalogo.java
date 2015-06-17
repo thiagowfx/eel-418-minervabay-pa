@@ -60,9 +60,9 @@ public class Dadoscatalogo implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "arquivo")
     private String arquivo;
-    @OneToMany(mappedBy = "patrimonio", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "patrimonio", cascade = {CascadeType.REMOVE, CascadeType.ALL})
     private Collection<PalavrasChave> palavrasChaveCollection;
-    @OneToMany(mappedBy = "patrimonio", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "patrimonio", cascade = {CascadeType.REMOVE, CascadeType.ALL})
     private Collection<Comentarios> comentariosCollection;
 
     public Dadoscatalogo() {

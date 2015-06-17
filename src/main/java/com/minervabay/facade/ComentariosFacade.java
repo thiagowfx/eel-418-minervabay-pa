@@ -32,5 +32,8 @@ public class ComentariosFacade extends AbstractFacade<Comentarios> {
     public List<Comentarios> findByPatrimonio(Integer patrimonio) {
         return em.createNamedQuery("Comentarios.findByPatrimonioNumber").setParameter("patrimonio", patrimonio).getResultList();
     }
-    
+
+    public void removeByPatrimonio(Integer patrimonio) {
+        em.createNamedQuery("Comentarios.removeByPatrimonioNumber").setParameter("patrimonio", patrimonio).executeUpdate();
+    }
 }

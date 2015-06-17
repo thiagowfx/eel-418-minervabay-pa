@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var index = getUrlParameter('index');
     if (index === undefined || index === "") {
-        mostrarDiv(1);
+        mostrarDiv(2);
     }
     else {
         doPopulaCatalogacao(index);
@@ -392,7 +392,7 @@ function doExcluir() {
         },
         error: function () {
             console.log('INFO: Excluir failed.');
-            $("#idMsgDialogo3").html('Erro! Tentativa de exclusão de patrimônio não existente.');
+            $("#idMsgDialogo3").html('Erro desconhecido durante a exclusão solicitada.');
         }
     });   
 }

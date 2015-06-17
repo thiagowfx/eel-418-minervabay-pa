@@ -1,7 +1,9 @@
 package com.minervabay.servlet;
 
 import com.minervabay.entity.Dadoscatalogo;
+import com.minervabay.facade.ComentariosFacade;
 import com.minervabay.facade.DadoscatalogoFacade;
+import com.minervabay.facade.PalavrasChaveFacade;
 import static com.minervabay.util.Utils.getBookPath;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,12 @@ public class excluirServlet extends HttpServlet {
 
     @EJB
     private DadoscatalogoFacade dadosFacade;
+    
+    @EJB
+    private PalavrasChaveFacade palavrasFacade;
+    
+    @EJB
+    private ComentariosFacade comentariosFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,6 +45,8 @@ public class excluirServlet extends HttpServlet {
         Dadoscatalogo dado = dadosFacade.find(patrimonio);
 
         if (dado != null) {
+            palavrasFacade.removeByPatrimonio(patrimonio);
+            comentariosFacade.removeByPatrimonio(patrimonio);
             dadosFacade.remove(dado);
 
             String arquivo = dado.getArquivo();

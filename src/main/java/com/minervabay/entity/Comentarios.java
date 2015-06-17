@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comentarios.findAll", query = "SELECT c FROM Comentarios c"),
+    @NamedQuery(name = "Comentarios.removeByPatrimonioNumber", query = "DELETE FROM Comentarios r WHERE r.patrimonio.patrimonio = :patrimonio"),
     @NamedQuery(name = "Comentarios.findByPatrimonioNumber", query = "SELECT c FROM Comentarios c WHERE c.patrimonio.patrimonio = :patrimonio"),
     @NamedQuery(name = "Comentarios.findBySerialnocomentarios", query = "SELECT c FROM Comentarios c WHERE c.serialnocomentarios = :serialnocomentarios"),
     @NamedQuery(name = "Comentarios.findByComentario", query = "SELECT c FROM Comentarios c WHERE c.comentario = :comentario")})

@@ -45,7 +45,6 @@ public class adicionarServlet extends HttpServlet {
         String veiculo = request.getParameter("veiculo");
         String datapublicacao = request.getParameter("datapublicacao");
         String palchave = request.getParameter("palchave");
-        // TODO: mais dados
 
         Dadoscatalogo dado = dadosFacade.find(patrimonio);
         boolean existant;
@@ -71,20 +70,8 @@ public class adicionarServlet extends HttpServlet {
                 System.out.println(e.getMessage());
             }
         }
-        
-        palchaveFacade.removeByPatrimonio(patrimonio);
-        
-        if (!palchave.trim().isEmpty()) {
-            String[] keywords = palchave.trim().split(";");
-            for (String keyword : keywords) {
-                keyword = keyword.trim();
 
-                PalavrasChave p = new PalavrasChave();
-                p.setPatrimonio(dado);
-                p.setPalchave(keyword);
-                palchaveFacade.create(p);
-            }
-        }
+        palchaveFacade.removeByPatrimonio(patrimonio);
 
         try {
             if (existant) {
@@ -94,6 +81,26 @@ public class adicionarServlet extends HttpServlet {
             }
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        }
+
+        if (!palchave.trim().isEmpty()) {
+            String[] keywords = palchave.trim().split(";");
+            System.out.println("==== keywords length" + keywords.length);
+
+            for (String keyword : keywords) {
+                keyword = keyword.trim();
+                System.out.println("==== keyword:" + keyword);
+
+                PalavrasChave p = new PalavrasChave();
+                // p.setPatrimonio(dadosFacade.find(patrimonio));
+                p.setPalchave(keyword);
+
+                System.out.println("=====p: " + p);
+                palchaveFacade.create(p);
+                
+                p.setPatrimonio(dadosFacade.find(patrimonio));
+                palchaveFacade.edit(p);
+            }
         }
     }
 
