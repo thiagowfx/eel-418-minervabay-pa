@@ -30,6 +30,7 @@ public class buscaServlet extends HttpServlet {
 
     private final int RESULTS_PER_PAGE = 2;
 
+    // both inclusive
     private int[] calculateRange(int page) {
         int[] ans = new int[2];
         ans[0] = (page - 1) * RESULTS_PER_PAGE;
@@ -60,7 +61,7 @@ public class buscaServlet extends HttpServlet {
             Dadoscatalogo dado = dadosFacade.find(Integer.parseInt(patrimonio));
             dados.add(dado);
         } else if (buscarPatrimonio) {
-            dados = dadosFacade.findRange(calculateRange(pagina));
+            dados = dadosFacade.findAll();
         } else {
             boolean checktituloE = request.getParameter("idchecktituloE").compareTo("true") == 0;
             boolean checkautoriaE = request.getParameter("idcheckautoriaE").compareTo("true") == 0;
@@ -79,42 +80,48 @@ public class buscaServlet extends HttpServlet {
             String veiculo = request.getParameter("idveiculo2");
             String palchave = request.getParameter("idpalchave2");
             String datapublicacao_str = request.getParameter("iddatapublicacao2");
-            
-            // boolean atlone = checktituloE || checkautoriaE || checkveiculoE || checkdatapublicacaoE || checkpalchaveE || checktituloOU || checkautoriaOU || checkveiculoOU || checkdatapublicacaoOU || checkpalchaveOU;
-            
+
+            boolean atleast_one_or = checktituloOU || checkautoriaOU || checkveiculoOU || checkdatapublicacaoOU || checkpalchaveOU;
             String tituloE = checktituloE ? titulo : "";
             String autoriaE = checkautoriaE ? autoria : "";
             String veiculoE = checkveiculoE ? veiculo : "";
             String palchaveE = checkpalchaveE ? palchave : "";
+
+            String SQL_FALSE = "1 = 0";
+            String SQL_TRUE = "1 = 1";
             
-            String ourwhere = " "
+            String queryStr
+                    = "SELECT d FROM Dadoscatalogo d "
+                    + "LEFT JOIN PalavrasChave p "
+                    + "ON Dadoscatalogo.patrimonio = PalavrasChave.patrimonio "
+                    + "WHERE ("
                     + "d.titulo LIKE " + pct(tituloE)
                     + " AND "
                     + "d.autoria LIKE " + pct(autoriaE)
                     + " AND "
                     + "d.veiculo LIKE " + pct(veiculoE)
                     + " AND "
-                    + (checkdatapublicacaoE ? ("(d.dataPublicacao BETWEEN '" + datapublicacao_str + "' AND '" + datapublicacao_str + "')") : "1 = 1");
-//                    ;
-//                    + " AND "
-//                    + "("
-//                    + "d.titulo LIKE %:titulo%"
-//                    + " OR "
-//                    + "d.autoria LIKE %:autoria%"
-//                    + " OR "
-//                    + "d.veiculo LIKE :%veiculo%"
-//                    + " OR "
-//                    + "d.palchave LIKE :%palchave%"
-//                    + " OR "
-//                    + "d.datapublicacao = :datapublicacao"
-//                    + ")"
-//                    ;
+                    + (checkdatapublicacaoE ? ("(d.dataPublicacao BETWEEN '" + datapublicacao_str + "' AND '" + datapublicacao_str + "')") : SQL_TRUE)
+                    + " AND ("
+                    + (atleast_one_or ? SQL_FALSE : SQL_TRUE)
+                    + " OR "
+                    + (checktituloOU ? ("d.titulo LIKE " + pct(titulo)) : SQL_FALSE)
+                    + " OR "
+                    + (checkautoriaOU ? ("d.autoria LIKE " + pct(autoria)) : SQL_FALSE)
+                    + " OR "
+                    + (checkveiculoOU ? ("d.veiculo LIKE " + pct(veiculo)) : SQL_FALSE)
+                    + " OR "
+                    + (checkdatapublicacaoOU ? ("(d.dataPublicacao BETWEEN '" + datapublicacao_str + "' AND '" + datapublicacao_str + "')") : SQL_FALSE)
+                    + "))";
             
-            String queryStr = "SELECT d FROM Dadoscatalogo d WHERE (" + ourwhere + ")";
-            System.out.println("====" + queryStr);
+            System.out.println("===QUERY DEBUG > Length ===: " + queryStr);
             Query query = dadosFacade.getEntityManager().createQuery(queryStr);
             dados = query.getResultList();
         }
+        
+        int[] range = calculateRange(pagina);
+        System.out.println("===QUERY DEBUG===:" + dados.size());
+        dados = dados.subList(range[0], Math.min(range[1] + 1, dados.size()));
 
         for (Dadoscatalogo dado : dados) {
             booksArrayBuilder.add(dado.toJson());
@@ -130,7 +137,7 @@ public class buscaServlet extends HttpServlet {
             out.print(jsonObj);
         }
     }
-    
+
     String pct(String s) {
         return "'%".concat(s).concat("%'");
     }
